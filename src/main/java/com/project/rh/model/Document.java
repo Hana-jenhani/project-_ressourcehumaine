@@ -21,5 +21,8 @@ public class Document implements Serializable {
     private String typeDoc;
     private StatusOfDemand statusOfDemand;
     private boolean archived;
-
+    @ManyToOne
+    @JoinColumn(name = "idUser", referencedColumnName = "idUser")
+    @JsonBackReference
+    private Employe employe;
 }

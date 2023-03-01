@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CongeServiceImpl implements ICongeService {
@@ -46,6 +47,12 @@ public class CongeServiceImpl implements ICongeService {
         this.congeRepository.deleteById(Id);
     }
 
+    @Override
+    public List<Conge> getCongeByStatus() {
+        List<Conge> Conges =  congeRepository.getCongeByStatus();
+        return Conges;
+    }
+
     public void accepterConge(Long id) {
 
         Conge conge = congeRepository.findById(id).get();
@@ -53,8 +60,34 @@ public class CongeServiceImpl implements ICongeService {
 
         conge.setStatusOfDemand("Accepted");
         congeRepository.save(conge);
+        user.setJoursConges(user.getJoursConges() + conge.getDuree());
+        user.setSoldeConges(user.getDureeConges() - user.getJoursConges());
+        employeRepository.save(user);
 
+    }
+    public boolean refuserConge (Long id) {
 
+        Optional<Conge> conge = congeRepository.findById(id);
+        if (conge.isPresent()) {
+            conge.get().setStatusOfDemand("Refused");
+            congeRepository.save(conge.get());
+            return true ;
+        }
+        return false ;
+    }
+    public int countDuree (Long id ) {
 
+        UserInformation user = employeRepository.findById(id).get();
+        List<Conge> conges = user.getConges();
+        for (Conge conge:conges) {
+            d = d + (conge.getDuree());
+        }
+        return d;
+    }
+    public void updateDuree (Long id ) {
+
+        UserInformation user = employeRepository.findById(id).get();
+        user.setDureeConges(d);
+        employeRepository.save(user);
     }
 }

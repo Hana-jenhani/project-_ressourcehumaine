@@ -19,4 +19,7 @@ public class Presence {
     private LocalDate day;
     private int nbrheures;
 
+    @ManyToOne
+    private UserInformation userInfo ;
+
 }

@@ -1,6 +1,7 @@
 package com.project.rh.controller;
 
 import com.project.rh.model.Conge;
+import com.project.rh.model.UserInformation;
 import com.project.rh.service.CongeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,22 @@ public class CongeController {
     public void accepterConge( @RequestParam Long id) {
 
         congeService.accepterConge(id);
-
     }
+    //http://localhost:8089/SpringMVC/refuser-conge
+    @GetMapping("/refuser-conge")
+    public void refuserConge (@RequestParam Long id) {
+
+        congeService.refuserConge(id);
+    }
+    //http://localhost:8089/SpringMVC/conges_attente
+    @GetMapping("conges_attente")
+    public List<Conge> getCongeByStatus (){
+        return congeService.getCongeByStatus();
+    }
+    @GetMapping("/dureeConge/{id}")
+    public int getDuree(@PathVariable Long id ) {
+        return congeService.countDuree(id);
+    }
+
+
 }

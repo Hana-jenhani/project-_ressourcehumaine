@@ -21,5 +21,11 @@ public class CandidateAppelOffre implements Serializable {
     @EmbeddedId
     private PKCandidateAppelOffre pkCandidateAppelOffre;
 
+    @ManyToOne
+    @JoinColumn(name = "idUser", referencedColumnName = "idUser", insertable = false, updatable = false)
+    private Candidat candidat;
 
+    @ManyToOne
+    @JoinColumn(name = "idOffre", referencedColumnName = "idOffre", insertable = false, updatable = false)
+    private AppelOffre appelOffre;
 }

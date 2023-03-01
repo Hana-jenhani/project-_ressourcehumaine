@@ -15,4 +15,6 @@ public interface IEmployeService {
     UserInformation getEmployeById(long Id);
 
     void deleteEmployeById(long Id);
+
+
 }
